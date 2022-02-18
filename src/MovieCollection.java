@@ -1,8 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class MovieCollection
 {
@@ -164,6 +164,42 @@ public class MovieCollection
 
     private void searchCast()
     {
+        System.out.print("Enter a cast search term: ");
+        String castTerm = scanner.nextLine();
+
+        // prevent case sensitivity
+        castTerm  = castTerm.toLowerCase();
+
+        // arraylist to hold search cast members
+        ArrayList<String> casts = new ArrayList<String>();
+
+        // searches through the movie list and adds all the casts members onto a new list.
+        for (int i = 0; i < movies.size(); i++)
+        {
+            String movieCast = movies.get(i).getCast().toLowerCase();
+            String str[] = (movieCast.split("\\|"));
+            for(int j = 0; j < str.length; j++){
+                if(casts.indexOf(str[j]) == -1) {
+                    casts.add(str[j].toLowerCase());
+                }
+            }
+
+        }
+
+        Collections.sort(casts);
+
+        for(int i = 0; i < casts.size();i++){
+            if(casts.get(i).indexOf(castTerm) == -1){
+                casts.remove(i);
+                i--;
+            }
+
+        }
+
+
+        System.out.println(casts);
+
+
 
 
     }
