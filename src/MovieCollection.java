@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -196,8 +197,56 @@ public class MovieCollection
 
         }
 
+        ArrayList<String> printedCasts = new ArrayList<String>();
 
-        System.out.println(casts);
+        for(int i = 0; i < casts.size();i++){
+            printedCasts.add(i, i + 1 + ". " + casts.get(i));
+
+        }
+
+        System.out.println(printedCasts);
+        System.out.print("Enter a number that you want to search: ");
+        int nameOption = scanner.nextInt();
+
+        int choice = nameOption - 1;
+
+        System.out.println(casts.get(choice));
+
+        ArrayList<Movie> moviesRelated = new ArrayList<Movie>();
+
+        for (int i = 0; i < movies.size(); i++)
+        {
+            String movieCast = movies.get(i).getCast();
+            movieCast = movieCast.toLowerCase();
+
+            if (movieCast.contains(casts.get(choice)))
+            {
+                //add the Movie object to the results list
+                moviesRelated.add(movies.get(i));
+            }
+        }
+        sortResults(moviesRelated);
+
+        ArrayList<String> printedMovies = new ArrayList<>();
+        for(int i = 0; i < moviesRelated.size();i++){
+            printedMovies.add(i, i + 1 + ". " + moviesRelated.get(i).getTitle());
+
+        }
+        System.out.println(printedMovies);
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.print("Enter number: ");
+        int choice2 = scanner.nextInt();
+        scanner.nextLine();
+
+        Movie selectedMovie = moviesRelated.get(choice2 - 1);
+
+        displayMovieInfo(selectedMovie);
+
+
+
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
+
 
 
 
